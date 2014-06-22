@@ -16,4 +16,3 @@ gem 'spring',        group: :development
 
 gem 'unicorn'              , '~> 4.8.2'
 gem 'docker-api', '1.11.2'
-gem 'sqlite3'
