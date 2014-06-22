@@ -1,0 +1,38 @@
+<h1>Containers</h1>
+
+<table class="table table-striped table-hover">
+  <thead>
+    <th>From Image</th>
+    <th>Names</th>
+    <th>Ports</th>
+    <th>Status</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </thead>
+  <% @containers.each do |container| %>
+  <tr>
+    <td> <%= container['Image'] %> </td>
+    <td> <span title="<%= container['Id'] %>" ><%= container['Names'] %></span> </td>
+    <td>
+      <% if !container['Ports'].nil? && !container['Ports'].first.nil? %>
+        <%= container['Ports'].first['PublicPort'] %>:<%= container['Ports'].first['PrivatePort'] %>
+      <% end %>
+    </td>
+    <td> <%= container['Status'] %> </td>
+    <td>
+      <%= button_to 'Start' , container_start_path(:id => container['Id'] ), method: 'post',   :class => 'btn btn-success', remote: false %>
+    </td>
+    <td>
+      <%= button_to 'Stop'  , container_stop_path(:id => container['Id'] ),  method: 'post',   :class => 'btn btn-primary', remote: false %>
+    </td>
+    <td>
+      <%= button_to 'Kill'  , container_kill_path(:id => container['Id'] ),  method: 'post',   :class => 'btn btn-danger',  remote: false %>
+    </td>
+    <td>
+      <%= button_to 'Delete', container_delete_path(:id => container['Id'] ),  method: 'post', :class => 'btn btn-danger',  remote: false %>
+    </td>
+  </tr>
+  <% end %>
+</table>
