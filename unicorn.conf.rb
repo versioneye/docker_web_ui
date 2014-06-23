@@ -33,7 +33,7 @@ listen 9999, :tcp_nopush => true
 timeout 60
 
 # feel free to point this anywhere accessible on the filesystem
-# pid "pids/unicorn.pid"
+pid '/var/www/docker_web_ui/current/pids/unicorn.pid'
 
 # By default, the Unicorn logger will write to stderr.
 # Additionally, ome applications/frameworks log to stderr or stdout,
