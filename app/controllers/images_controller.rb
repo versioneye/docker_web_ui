@@ -10,6 +10,7 @@ class ImagesController < ApplicationController
   def delete
     id = params['id']
     Docker.connection.delete("/images/#{id}")
+    flash[:sucess] = "Image deleted."
     redirect_to images_index_path
   end
 
@@ -25,11 +26,11 @@ class ImagesController < ApplicationController
         dc = Docker.connection.post( uri )
       rescue => e
         p "error for POST /images/create?fromImage=#{name}&tag=#{tag}"
-        p e.message
-        p e.backtrace.join "\n"
+        Rails.logger.error e.message
+        Rails.logger.error e.backtrace.join "\n"
       end
     }
-    # TODO Message to user
+    flash[:sucess] = "The download was triggered. This can take a couple minutes. Please refresh the page regulary."
     redirect_to images_index_path
   end
 
@@ -62,8 +63,8 @@ class ImagesController < ApplicationController
       query = uri.query
       http.get("#{path}?#{query}")
     rescue => e
-      p e.message
-      p e.backtrace.join("\n")
+      Rails.logger.error e.message
+      Rails.logger.error e.backtrace.join("\n")
       nil
     end
 
