@@ -52,7 +52,7 @@ class ContainersController < ApplicationController
 
   private
 
-    def image_name_for id
+    def image_name_for cid
       image_name = ""
       containers = JSON.parse Docker.connection.get('/containers/json?all=1')
       containers.each do |container|
