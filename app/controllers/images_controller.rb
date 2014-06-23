@@ -10,7 +10,7 @@ class ImagesController < ApplicationController
   def delete
     id = params['id']
     Docker.connection.delete("/images/#{id}")
-    flash[:sucess] = "Image deleted."
+    flash[:success] = "Image deleted."
     redirect_to images_index_path
   end
 
@@ -30,7 +30,7 @@ class ImagesController < ApplicationController
         Rails.logger.error e.backtrace.join "\n"
       end
     }
-    flash[:sucess] = "The download was triggered. This can take a couple minutes. Please refresh the page regulary."
+    flash[:success] = "The download was triggered. This can take a couple minutes. Please refresh the page regulary."
     redirect_to images_index_path
   end
 
