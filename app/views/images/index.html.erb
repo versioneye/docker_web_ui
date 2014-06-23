@@ -17,7 +17,7 @@
       <%= button_to 'Create Container', container_create_path(:id => image['RepoTags'] ),  method: 'post', :class => 'btn btn-primary',  remote: false %>
     </td>
     <td>
-      <%= button_to 'Delete', image_delete_path(:id => image['Id'] ),  method: 'post', :class => 'btn btn-danger',  remote: false %>
+      <%= button_to 'Delete', image_delete_path(:id => image['Id'] ), method: 'post', :class => 'btn btn-danger', remote: false, onClick: "return confirmAction()" %>
     </td>
   </tr>
   <% end %>
@@ -37,7 +37,7 @@
     <td> <%= key %> </td>
     <td> <%= value['comments'] %> </td>
     <td>
-      <%= button_to 'Download', image_create_path(:id => key ),  method: 'post', :class => 'btn btn-primary',  remote: false %>
+      <%= button_to 'Download', image_create_path(:id => key ), method: 'post', :class => 'btn btn-primary', remote: false %>
     </td>
   </tr>
   <% end %>
