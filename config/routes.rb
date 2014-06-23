@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-
-
   root 'containers#index'
 
   get  'images/index'
