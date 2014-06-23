@@ -22,6 +22,10 @@ class ContainersController < ApplicationController
     Docker.connection.post("/containers/#{cid}/start", nil, :body => opt.to_json)
     flash[:success] = "Container started."
     redirect_to containers_index_path
+  rescue => e
+    Rails.logger.error e.message
+    flash[:error] = "An error occured (#{e.message}). Delete the container and create a new one."
+    redirect_to containers_index_path
   end
 
   def stop
