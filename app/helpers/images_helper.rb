@@ -4,6 +4,9 @@ module ImagesHelper
   def remote_images_hash
     response = fetch_response ENV['REMOTE_IMAGES']
     JSON.parse response.body
+  rescue => e
+    Rails.logger.error e.message
+    {}
   end
 
 
