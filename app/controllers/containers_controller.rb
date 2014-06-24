@@ -4,6 +4,9 @@ class ContainersController < ApplicationController
 
   def index
     @containers = JSON.parse Docker.connection.get('/containers/json?all=1')
+  rescue => e
+    Rails.logger.error e.message
+    flash[:error] = "An error occured (#{e.message}). It seems your Docker is not running!"
   end
 
   def create
@@ -12,6 +15,10 @@ class ContainersController < ApplicationController
     dc = Docker::Container.create('Image' => id, 'name' => name )
     flash[:success] = "Container created."
     redirect_to containers_index_path
+  rescue => e
+    Rails.logger.error e.message
+    flash[:error] = "An error occured (#{e.message}). Maybe a container with the same name exist already!?"
+    redirect_to images_index_path
   end
 
   def start
@@ -33,6 +40,10 @@ class ContainersController < ApplicationController
     Docker.connection.post("/containers/#{id}/stop")
     flash[:success] = "Container stoped."
     redirect_to containers_index_path
+  rescue => e
+    Rails.logger.error e.message
+    flash[:error] = "Something went wrong (#{e.message}). It's time to use the Kill button!"
+    redirect_to containers_index_path
   end
 
   def kill
@@ -40,17 +51,20 @@ class ContainersController < ApplicationController
     Docker.connection.post("/containers/#{id}/kill")
     flash[:success] = "Container killed."
     redirect_to containers_index_path
+  rescue => e
+    Rails.logger.error e.message
+    flash[:error] = "Your system is fucked up (#{e.message}). Contact one of the core comitters and be nice to him!"
+    redirect_to containers_index_path
   end
 
   def delete
     id = params['id']
-    begin
-      Docker.connection.delete("/containers/#{id}")
-      flash[:success] = "Container deleted."
-    rescue => e
-      Rails.logger.error e.message
-      flash[:error] = "An error occured. Maybe the container is still running?"
-    end
+    Docker.connection.delete("/containers/#{id}")
+    flash[:success] = "Container send to /dev/null (Nirvana)."
+    redirect_to containers_index_path
+  rescue => e
+    Rails.logger.error e.message
+    flash[:error] = "An error occured. Maybe the container is still running?"
     redirect_to containers_index_path
   end
 
