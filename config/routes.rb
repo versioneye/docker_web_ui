@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   get  'images/index'
   post 'images/:id/delete'   , :to => 'images#delete', :as => 'image_delete', :constraints => { :id => /[^\#]+/ }
   post 'images/:id/create'   , :to => 'images#create', :as => 'image_create', :constraints => { :id => /[^\#]+/ }
-  get  'images/remote_images', :to => 'images#remote_images'
 
   get  'containers/index'
   post 'containers/:id/start'   , :to => 'containers#start' , :as => 'container_start'

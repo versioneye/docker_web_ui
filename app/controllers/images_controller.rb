@@ -33,13 +33,4 @@ class ImagesController < ApplicationController
     redirect_to images_index_path
   end
 
-  def remote_images
-    response = fetch_response ENV['REMOTE_IMAGES']
-    respond_to do |format|
-      format.json {
-        render :json => response.body
-      }
-    end
-  end
-
 end
