@@ -40,11 +40,11 @@ class ImagesController < ApplicationController
     def trigger_download name, tag
       Thread.new{
         begin
-          uri = "/images/create?fromImage=#{name}&tag=#{tag}"
-          config = config_for name
-          auth = config['auth']
+          uri    = "/images/create?fromImage=#{name}&tag=#{tag}"
+          config = config_for "#{name}:#{tag}"
+          auth   = config['auth']
           dc = nil
-          if auth == true # todo
+          if auth == true
             user     = ENV['DOCKER_USER']
             password = ENV['DOCKER_PASSWORD']
             email    = ENV['DOCKER_EMAIL']
