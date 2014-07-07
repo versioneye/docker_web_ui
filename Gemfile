@@ -15,4 +15,4 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 gem 'unicorn'              , '~> 4.8.2'
-gem 'docker-api', '1.11.2'
+gem 'docker-api', '1.13.0'
