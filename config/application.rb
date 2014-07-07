@@ -18,17 +18,6 @@ module DockerWebUi
         Docker.url = docker_url
     end
 
-    docker_user  = ENV['DOCKER_USER']
-    docker_pass  = ENV['DOCKER_PASS']
-    docker_email = ENV['DOCKER_EMAIL']
-    if !docker_user.to_s.empty? && !docker_email.to_s.empty? && !docker_pass.to_s.empty?
-      begin
-        Docker.authenticate!('username' => docker_user, 'password' => docker_pass, 'email' => docker_email)
-      rescue => e
-        p e.message
-      end
-    end
-
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
