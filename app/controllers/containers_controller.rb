@@ -82,15 +82,4 @@ class ContainersController < ApplicationController
       image_name
     end
 
-    def config_for image_name
-      config = ""
-      images = remote_images_hash
-      images.each do |key, value|
-        if key.eql?( image_name )
-          config = images[key]
-        end
-      end
-      config
-    end
-
 end

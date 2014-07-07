@@ -41,7 +41,21 @@ class ImagesController < ApplicationController
       Thread.new{
         begin
           uri = "/images/create?fromImage=#{name}&tag=#{tag}"
-          dc = Docker.connection.post( uri )
+          config = config_for name
+          auth = config['auth']
+          dc = nil
+          if auth == true # todo
+            user     = ENV['DOCKER_USER']
+            password = ENV['DOCKER_PASSWORD']
+            email    = ENV['DOCKER_EMAIL']
+            options = {"username"=> user, "password"=> password, "email"=> email}
+            creds = options.to_json
+            headers = Docker::Util.build_auth_header(creds)
+            dc = Docker.connection.post( uri, {}, :headers => headers )
+          else
+            dc = Docker.connection.post( uri )
+          end
+          Rails.logger.info "Done with #{name}. - #{dc.to_s}"
         rescue => e
           p "error for POST /images/create?fromImage=#{name}&tag=#{tag}"
           Rails.logger.error e.message
