@@ -2,7 +2,6 @@
 
 <table class="table table-striped table-hover">
   <thead>
-    <th>ID</th>
     <th>RepoTags</th>
     <th>Size</th>
     <th></th>
@@ -10,8 +9,7 @@
   </thead>
   <% @images.each do |image| %>
   <tr>
-    <td> <%= image['Id'] %> </td>
-    <td> <%= image['RepoTags'] %> </td>
+    <td> <span title="<%= image['Id'] %>" > <%= image['RepoTags'] %> </span> </td>
     <td> <%= image['VirtualSize'] / 1000 / 1000 %> MB </td>
     <td>
       <%= button_to 'Create Container', container_create_path(:id => image['RepoTags'] ),  method: 'post', :class => 'btn btn-primary',  remote: false %>
