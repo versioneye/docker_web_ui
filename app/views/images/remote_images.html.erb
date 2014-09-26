@@ -1,0 +1,18 @@
+<h1>Remote Images</h1>
+
+<table class="table table-striped table-hover">
+  <thead>
+    <th>Image</th>
+    <th>Comments</th>
+    <th></th>
+  </thead>
+  <% @r_images.each do |key, value| %>
+  <tr>
+    <td> <%= key %> </td>
+    <td> <%= value['comments'] %> </td>
+    <td>
+      <%= button_to 'Download', image_create_path(:id => key ), method: 'post', :class => 'btn btn-primary', remote: false %>
+    </td>
+  </tr>
+  <% end %>
+</table>

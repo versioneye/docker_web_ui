@@ -4,9 +4,17 @@ class ImagesController < ApplicationController
 
   def index
     @images = JSON.parse Docker.connection.get('/images/json')
+  rescue => e
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join "\n"
+    flash[:error] = "An error occured (#{e.message}). It seems your Docker is not running!"
+  end
+
+  def remote_images
     @r_images = remote_images_hash
   rescue => e
     Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join "\n"
     flash[:error] = "An error occured (#{e.message}). It seems your Docker is not running!"
   end
 
@@ -17,6 +25,7 @@ class ImagesController < ApplicationController
     redirect_to images_index_path
   rescue => e
     Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join "\n"
     flash[:error] = "An error occured. Maybe a container of this image is still running?"
     redirect_to containers_index_path
   end
@@ -31,6 +40,7 @@ class ImagesController < ApplicationController
     redirect_to images_index_path
   rescue => e
     Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join "\n"
     flash[:error] = "An error occured (#{e.message}). Maybe you are offline?"
     redirect_to images_index_path
   end

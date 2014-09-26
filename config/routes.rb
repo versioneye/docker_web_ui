@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root 'containers#index'
 
   get  'images/index'
+  get  'images/remote_images'
   post 'images/:id/delete'   , :to => 'images#delete', :as => 'image_delete', :constraints => { :id => /[^\#]+/ }
   post 'images/:id/create'   , :to => 'images#create', :as => 'image_create', :constraints => { :id => /[^\#]+/ }
 
