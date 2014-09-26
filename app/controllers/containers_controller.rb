@@ -6,6 +6,7 @@ class ContainersController < ApplicationController
     @containers = JSON.parse Docker.connection.get('/containers/json?all=1')
   rescue => e
     Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join "\n"
     flash[:error] = "An error occured (#{e.message}). It seems your Docker is not running!"
   end
 
@@ -17,6 +18,7 @@ class ContainersController < ApplicationController
     redirect_to containers_index_path
   rescue => e
     Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join "\n"
     flash[:error] = "An error occured (#{e.message}). Maybe a container with the same name exist already!?"
     redirect_to images_index_path
   end
@@ -31,6 +33,7 @@ class ContainersController < ApplicationController
     redirect_to containers_index_path
   rescue => e
     Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join "\n"
     flash[:error] = "An error occured (#{e.message}). Delete the container and create a new one."
     redirect_to containers_index_path
   end
@@ -42,6 +45,7 @@ class ContainersController < ApplicationController
     redirect_to containers_index_path
   rescue => e
     Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join "\n"
     flash[:error] = "Something went wrong (#{e.message}). It's time to use the Kill button!"
     redirect_to containers_index_path
   end
@@ -53,6 +57,7 @@ class ContainersController < ApplicationController
     redirect_to containers_index_path
   rescue => e
     Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join "\n"
     flash[:error] = "Your system is fucked up (#{e.message}). Contact one of the core comitters and be nice to him!"
     redirect_to containers_index_path
   end
@@ -64,6 +69,7 @@ class ContainersController < ApplicationController
     redirect_to containers_index_path
   rescue => e
     Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join "\n"
     flash[:error] = "An error occured. Maybe the container is still running?"
     redirect_to containers_index_path
   end
