@@ -34,11 +34,17 @@ module ImagesHelper
 
 
   def config_for image_name
+    iname = image_name.split(":").first
     config = ""
     images = remote_images_hash
     images.each do |key, value|
       if key.eql?( image_name )
         config = images[key]
+        break
+      end
+      if key.match(/\A#{iname}/) != nil
+        config = images[key]
+        break
       end
     end
     config
