@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.1'
-gem 'sass-rails', '~> 4.0.3'
+gem 'rails', '4.2.0'
+gem 'sass-rails', '~> 5.0.0'
 gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.0.0'
+gem 'coffee-rails', '~> 4.1.0'
 gem 'therubyracer',  platforms: :ruby
 
 gem 'jquery-rails'
@@ -15,4 +15,4 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 gem 'unicorn'              , '~> 4.8.2'
-gem 'docker-api', '1.13.0'
+gem 'docker-api', '1.17.0'
