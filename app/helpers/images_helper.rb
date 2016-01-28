@@ -11,12 +11,31 @@ module ImagesHelper
 
 
   def fetch_response url
+
+    proxy_addr = ENV['PROXY_ADDR']
+    proxy_port = ENV['PROXY_PORT']
+    proxy_user = ENV['PROXY_USER']
+    proxy_pass = ENV['PROXY_PASS']
+    ssl_verify = ENV['SSL_VERIFY']
+
     uri  = URI.parse url
-    http = Net::HTTP.new uri.host, uri.port
+    http = nil
+
+    if proxy_addr.to_s.empty?
+      http = Net::HTTP.new uri.host, uri.port
+    elsif !proxy_addr.to_s.empty? && !proxy_port.to_s.empty? && !proxy_user.to_s.empty? && !proxy_pass.to_s.empty?
+      http = Net::HTTP.new uri.host, uri.port, proxy_addr, proxy_port.to_i, proxy_user, proxy_pass
+    elsif !proxy_addr.to_s.empty? && !proxy_port.to_s.empty? && proxy_user.to_s.empty?
+      http = Net::HTTP.new uri.host, uri.port, proxy_addr, proxy_port.to_i
+    end
+
     if uri.port == 443
+      http.use_ssl = true
+      if ssl_verify && ( ssl_verify.to_s.eql?('none') || ssl_verify.to_s.eql?('false') )
+        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      end
       curl_ca_bundle  = '/opt/local/share/curl/curl-ca-bundle.crt'
       ca_certificates = '/usr/lib/ssl/certs/ca-certificates.crt'
-      http.use_ssl = true
       if File.exist?(curl_ca_bundle)
         http.ca_file = curl_ca_bundle
       elsif File.exist?(ca_certificates)
@@ -49,6 +68,5 @@ module ImagesHelper
     end
     config
   end
-
 
 end
